@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="63.992" Height="63.992" Clip="F1 M 0,0L 63.992,0L 63.992,63.992L 0,63.992L 0,0">
+	<Rectangle Width="63.992" Height="63.9919" Canvas.Left="1.10095e-008" Canvas.Top="0.000101725" Stretch="Fill" Fill="#FF000000"/>
+	<Path Width="55.7191" Height="59.9931" Canvas.Left="4.0185" Canvas.Top="1.99913" Stretch="Fill" Fill="#FFFFFFFF" Data="F1 M 4.0185,31.9956L 59.7376,61.9922L 59.7376,1.99913L 4.0185,31.9956 Z "/>
+</Canvas>
