@@ -16,7 +16,6 @@
         private readonly IRegionManager regionManager;
         private readonly IGoogleBookService googleBookService;
 
-        private ICommand returnToMainViewCommand;
         private ICommand searchCommand;
         private ICommand changePageResultsCommand;
 
@@ -35,14 +34,6 @@
 
             this.currentPaginationOffset = 0;
             this.paginationBlockLength = 10;
-        }
-
-        public ICommand ReturnToMainViewCommand
-        {
-            get
-            {
-                return this.returnToMainViewCommand ?? (this.returnToMainViewCommand = new DelegateCommand(this.OnReturnToMainViewRequest, () => true));
-            }
         }
 
         public ICommand SearchCommand
@@ -100,11 +91,6 @@
 
                 return $"Viewing {this.currentPaginationOffset + 1} - {this.currentPaginationOffset + 1 + this.paginationBlockLength} out of {this.colection.TotalItemsExpected}";
             }
-        }
-
-        private void OnReturnToMainViewRequest()
-        {
-            this.regionManager.RequestNavigate(RegionName.MainRegion, nameof(MainView));
         }
 
         private async void OnSearchRequest()

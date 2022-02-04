@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:constants="clr-namespace:LibraryBookFinder.Constants"
+        xmlns:converters="clr-namespace:LibraryBookFinder.Converters"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="Library Book Finder" 
@@ -14,6 +15,9 @@
         ResizeMode="NoResize" 
         WindowState="Maximized"
         WindowStyle="None">
+    <Window.Resources>
+        <converters:BoolToVisibilityConverter x:Key="booltoVisibilityConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -32,7 +36,9 @@
                         Style="{DynamicResource BackButton}"
                         Height="40"
                         Width="40"
-                        Margin="20,10" />
+                        Margin="20,10"
+                        Command="{Binding ReturnToMainViewCommand}"
+                        Visibility="{Binding Path=CanUseBackButton, Converter={StaticResource booltoVisibilityConverter}}"/>
                 <Button x:Name="quitButton"
                         Grid.Column="1"
                         Content="Quit" 

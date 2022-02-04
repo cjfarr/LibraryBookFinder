@@ -109,6 +109,7 @@
       <DependentUpon>BookResultControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Events\NavigateViewsEvent.cs" />
     <Compile Include="Models\NotifyPropertyChangedModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SearchBooksViewModel.cs" />
