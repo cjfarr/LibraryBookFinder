@@ -47,6 +47,7 @@
                         Margin="10"
                         Height="40"
                         Width="100"
+                        Visibility="{Binding Path=ShowExitButton, Converter={StaticResource booltoVisibilityConverter}}"
                         Click="OnQuitButtonClick"/>
                 <TextBlock Text="Library Book Finder"
                            HorizontalAlignment="Center"

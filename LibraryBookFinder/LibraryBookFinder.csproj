@@ -84,6 +84,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\OptionalSearchField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +111,9 @@
     <Compile Include="Constants\RegionName.cs" />
     <Compile Include="Controls\BookResultControl.xaml.cs">
       <DependentUpon>BookResultControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\OptionalSearchField.xaml.cs">
+      <DependentUpon>OptionalSearchField.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Events\NavigateViewsEvent.cs" />

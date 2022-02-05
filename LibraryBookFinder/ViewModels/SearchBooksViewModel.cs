@@ -1,15 +1,14 @@
 ﻿namespace LibraryBookFinder.ViewModels
 {
-    using LibraryBookFinder.Constants;
     using LibraryBookFinder.Infrastructure.Interfaces;
     using LibraryBookFinder.Infrastructure.JsonModels;
     using LibraryBookFinder.Models;
-    using LibraryBookFinder.Views;
     using Prism.Commands;
     using Prism.Regions;
     using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using System.Windows.Threading;
 
     public class SearchBooksViewModel : NotifyPropertyChangedModel
     {
@@ -93,21 +92,32 @@
             }
         }
 
+        public bool AreSearchResultsAvailable
+        {
+            get
+            {
+                return this.colection?.TotalItemsExpected > 0;
+            }
+        }
+
         private async void OnSearchRequest()
         {
+            this.SearchResults.Clear();
             this.IsBusy = true;
+
             try
             {
                 this.colection = await this.googleBookService.RequestBooks("The", this.currentPaginationOffset, this.paginationBlockLength);
-                this.SearchResults = new ObservableCollection<Book>(colection.Books);
-                this.RaisePropertyChange(nameof(this.ViewPositionMessage));
+                this.SearchResults.AddRange(colection.Books);
             }
             catch
             {
             }
             finally
             {
-                this.isBusy = false;
+                this.IsBusy = false;
+                this.RaisePropertyChange(nameof(this.ViewPositionMessage));
+                this.RaisePropertyChange(nameof(this.AreSearchResultsAvailable));
             }
         }
 

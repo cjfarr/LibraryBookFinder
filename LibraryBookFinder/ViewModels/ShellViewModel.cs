@@ -39,6 +39,22 @@
             }
         }
 
+        /// <summary>
+        /// Making an easy shut down button available
+        /// when in debug mode only.
+        /// </summary>
+        public bool ShowExitButton
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
         public ICommand ReturnToMainViewCommand
         {
             get
@@ -61,6 +77,8 @@
 
         private void OnReturnToMainView()
         {
+            ////When we go back, the Search view needs to be disposed.
+            this.regionManager.Regions[RegionName.MainRegion].RemoveAll();
             this.regionManager.RequestNavigate(RegionName.MainRegion, nameof(MainView), this.OnNavigateViewsEvent);
         }
     }

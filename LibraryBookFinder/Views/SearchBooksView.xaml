@@ -25,12 +25,11 @@
         <StackPanel Grid.Row="0"
                     Margin="20"
                     Orientation="Horizontal">
-            <ToggleButton Content="Title" 
-                          IsChecked="True"
+            <ToggleButton x:Name="testToggle" 
+                          Content="Title"
                           Width="150"
                           Height="40"
-                          ToolTip="Testing"
-                          IsEnabled="{Binding IsBusy, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}" />
+                          ToolTip="Testing" />
             <Button Content="Search"
                     Command="{Binding SearchCommand}"
                     IsEnabled="{Binding IsBusy, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}" />
@@ -43,7 +42,8 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3"
+              Visibility="{Binding AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
