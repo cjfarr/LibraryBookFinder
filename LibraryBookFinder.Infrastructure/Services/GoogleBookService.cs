@@ -19,15 +19,21 @@
             this.inputValidation = new Regex(@"^\d+$");
         }
 
+        public string LastJsonResponse
+        {
+            get;
+            private set;
+        }
+
         public async Task<BookCollection> RequestBooks(string titleSearch, int paginationOffset, int paginationLenth = 10)
         {
             string uri = $"https://www.googleapis.com/books/v1/volumes?q={titleSearch}&startIndex={paginationOffset}&maxResults={paginationLenth}";
             BookCollection collection = null;
 
             Task<string> result = this.httpClient.GetStringAsync(uri);
-            string json = await result.ConfigureAwait(false);
+            this.LastJsonResponse = await result.ConfigureAwait(false);
 
-            using (JsonReader reader = new JsonTextReader(new StringReader(json)))
+            using (JsonReader reader = new JsonTextReader(new StringReader(this.LastJsonResponse)))
             {
                 JsonSerializer serializer = JsonSerializer.Create();
                 collection = serializer.Deserialize<BookCollection>(reader);

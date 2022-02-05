@@ -76,6 +76,7 @@
     <Compile Include="Interfaces\IGoogleBookService.cs" />
     <Compile Include="JsonModels\Book.cs" />
     <Compile Include="JsonModels\BookCollection.cs" />
+    <Compile Include="JsonModels\ImageLinks.cs" />
     <Compile Include="JsonModels\VolumeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GoogleBookService.cs" />

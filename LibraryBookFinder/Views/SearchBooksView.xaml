@@ -26,9 +26,9 @@
               Margin="20"
               HorizontalAlignment="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <controls:OptionalSearchField x:Name="titleSearchField"
                                           IsUsingField="{Binding IsUsingSearchTitle, Mode=TwoWay}"
@@ -39,19 +39,41 @@
                                           IsUsingField="{Binding IsUsingSearchAuthor, Mode=TwoWay}"
                                           SearchLabel="Search Author"
                                           SearchText="{Binding SearchAuthorCriteria, Mode=OneWayToSource}" />
-            <Button Grid.Column="2" 
-                    Content="Search"
-                    Command="{Binding SearchCommand}"
-                    IsEnabled="{Binding CanUseSearchButton}" />
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal">
+                <Button Content="Search"
+                        Command="{Binding SearchCommand}"
+                        IsEnabled="{Binding CanUseSearchButton}" />
+                <Button Content="Show Json"
+                        HorizontalAlignment="Right"
+                        Margin="5,0"
+                        Visibility="{Binding CanViewJsonResponse, Converter={StaticResource boolToVisibilityConverter}}"
+                        Command="{Binding ShowJsonResponseCommand}" />
+            </StackPanel>
         </Grid>
-        <ItemsControl ItemsSource="{Binding SearchResults}"
-                      Grid.Row="2">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <controls:BookResultControl />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid Grid.Row="2"
+              HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ItemsControl ItemsSource="{Binding SearchResults}"
+                          HorizontalAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <controls:BookResultControl />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBox x:Name="debugOnlyJsonTextBox"
+                     Grid.Column="1"
+                     Text="{Binding LastJsonResponse, Mode=OneWay}"
+                     IsReadOnly="True"
+                     TextWrapping="WrapWithOverflow"
+                     MaxWidth="500"
+                     Margin="20,0"
+                     Visibility="{Binding ShowJsonResults, Converter={StaticResource boolToVisibilityConverter}}"/>
+        </Grid>
         <Grid Grid.Row="3"
               Visibility="{Binding AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}">
             <Grid.ColumnDefinitions>

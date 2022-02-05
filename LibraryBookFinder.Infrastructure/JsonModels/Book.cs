@@ -1,6 +1,7 @@
 ﻿namespace LibraryBookFinder.Infrastructure.JsonModels
 {
     using Newtonsoft.Json;
+    using System;
 
     [JsonObject]
     public class Book
@@ -25,6 +26,14 @@
             get
             {
                 return this.VolumeInfo?.Authors;
+            }
+        }
+
+        public Uri ImageThumbnail
+        {
+            get
+            {
+                return this.VolumeInfo?.Images?.Thumbnail;
             }
         }
     }

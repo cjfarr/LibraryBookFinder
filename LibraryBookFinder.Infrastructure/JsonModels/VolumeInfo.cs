@@ -18,5 +18,12 @@
             get;
             set;
         }
+
+        [JsonProperty("imageLinks")]
+        public ImageLinks Images
+        {
+            get;
+            set;
+        }
     }
 }

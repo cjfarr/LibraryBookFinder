@@ -15,6 +15,7 @@
 
         private ICommand searchCommand;
         private ICommand changePageResultsCommand;
+        private ICommand showJsonResponseCommand;
 
         private bool isBusy;
         private ObservableCollection<Book> searchResults;
@@ -25,6 +26,7 @@
         private bool isUsingSearchTitle;
         private string searchAuthorCriteria;
         private bool isUsingSearchAuthor;
+        private bool showJsonResults;
 
         public SearchBooksViewModel(
             IRegionManager regionManager,
@@ -48,6 +50,15 @@
         public ICommand ChangePageResultsCommand
         {
             get => this.changePageResultsCommand ?? (this.changePageResultsCommand = new DelegateCommand<int?>(this.OnChangePageResultsRequest));
+        }
+
+        public ICommand ShowJsonResponseCommand
+        {
+            get => this.showJsonResponseCommand ?? (this.showJsonResponseCommand = new DelegateCommand(
+                () =>
+                {
+                    this.ShowJsonResults = !this.ShowJsonResults;
+                }));
         }
 
         public bool IsBusy
@@ -142,6 +153,35 @@
                 this.isUsingSearchAuthor = value;
                 this.RaisePropertyChange(nameof(this.IsUsingSearchAuthor));
                 this.RaisePropertyChange(nameof(this.CanUseSearchButton));
+            }
+        }
+
+        public string LastJsonResponse
+        {
+            get => this.googleBookService.LastJsonResponse;
+        }
+
+        public bool CanViewJsonResponse
+        {
+            get
+            {
+#if DEBUG
+                return true;
+#else
+                return false;
+#endif
+            }
+        }
+
+        public bool ShowJsonResults
+        {
+            get => this.showJsonResults;
+
+            set
+            {
+                this.showJsonResults = value;
+                this.RaisePropertyChange(nameof(this.ShowJsonResults));
+                this.RaisePropertyChange(nameof(this.LastJsonResponse));
             }
         }
 
