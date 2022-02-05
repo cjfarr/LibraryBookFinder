@@ -1,6 +1,7 @@
 ﻿namespace LibraryBookFinder.Views
 {
     using LibraryBookFinder.Constants;
+    using LibraryBookFinder.ViewModels;
     using Prism.Regions;
     using System;
     using System.Windows.Controls;
@@ -24,19 +25,6 @@
             this.idleTimer.Interval = new TimeSpan(0, 1, 0);
             this.idleTimer.Tick += this.OnIdleTimerTick;
             this.idleTimer.Start();
-
-            this.testToggle.Checked += TestToggle_Checked;
-            this.testToggle.Unchecked += TestToggle_Unchecked;
-        }
-
-        private void TestToggle_Unchecked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Toggle unchecked");
-        }
-
-        private void TestToggle_Checked(object sender, System.Windows.RoutedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Toggle checked");
         }
 
         private void OnIdleTimerTick(object sender, EventArgs e)

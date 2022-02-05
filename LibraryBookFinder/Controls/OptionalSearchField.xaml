@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="LibraryBookFinder.Controls.OptionalSearchField"
+             x:Name="optionalSearchField"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="125" 
              d:DesignWidth="400">
-    <Grid>
+    <Grid Margin="5,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -17,13 +18,18 @@
             <RowDefinition Height="5" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ToggleButton x:Name="onOffToggleButton" />
+        <ToggleButton x:Name="onOffToggleButton"
+                      IsThreeState="False"
+                      IsChecked="{Binding Path=IsUsingField, ElementName=optionalSearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock x:Name="labelTextBlock"
                    Grid.Column="1"
-                   Text="Search Title"
-                   Margin="5,0,0,5"/>
+                   VerticalAlignment="Center"
+                   Text="{Binding Path=SearchLabel, ElementName=optionalSearchField}"
+                   Margin="5,0"/>
         <TextBox x:Name="searchFieldTextBox"
                  Grid.Row="2"
-                 Grid.ColumnSpan="2"/>
+                 Grid.ColumnSpan="2"
+                 Text="{Binding Path=SearchText, ElementName=optionalSearchField, UpdateSourceTrigger=LostFocus}"
+                 MaxLength="50" />
     </Grid>
 </UserControl>

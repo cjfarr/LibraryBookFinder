@@ -124,10 +124,10 @@
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetProperty="(Canvas.Left)"
-                                                             Storyboard.TargetName="switch"
-                                                             From="25"
-                                                             To="3"
-                                                             Duration="0:0:0.15"/>
+                                                         Storyboard.TargetName="switch"
+                                                         From="25"
+                                                         To="3"
+                                                         Duration="0:0:0.15"/>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Indeterminate" />

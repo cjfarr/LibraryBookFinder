@@ -24,5 +24,26 @@
 
             System.Diagnostics.Debug.WriteLine(collection?.Books?.FirstOrDefault()?.Authors[0]);
         }
+
+        [TestMethod]
+        public void CheckInputValidation()
+        {
+            IGoogleBookService service = new GoogleBookService();
+
+            string input = string.Empty;
+            Assert.IsFalse(service.CheckIfInputIsValid(input));
+
+            input = "        ";
+            Assert.IsFalse(service.CheckIfInputIsValid(input));
+
+            input = "This is a ridculously long search title that should fail, simply because it's way too long.";
+            Assert.IsFalse(service.CheckIfInputIsValid(input));
+
+            input = "123456789";
+            Assert.IsFalse(service.CheckIfInputIsValid(input));
+
+            input = "Fundamentals of programming";
+            Assert.IsTrue(service.CheckIfInputIsValid(input));
+        }
     }
 }

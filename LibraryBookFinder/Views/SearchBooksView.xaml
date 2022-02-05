@@ -22,18 +22,28 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0"
-                    Margin="20"
-                    Orientation="Horizontal">
-            <ToggleButton x:Name="testToggle" 
-                          Content="Title"
-                          Width="150"
-                          Height="40"
-                          ToolTip="Testing" />
-            <Button Content="Search"
+        <Grid Grid.Row="0"
+              Margin="20"
+              HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <controls:OptionalSearchField x:Name="titleSearchField"
+                                          IsUsingField="{Binding IsUsingSearchTitle, Mode=TwoWay}"
+                                          SearchLabel="Search Title"
+                                          SearchText="{Binding SearchTitleCriteria, Mode=OneWayToSource}" />
+            <controls:OptionalSearchField x:Name="authorSearchField"
+                                          Grid.Column="1"
+                                          IsUsingField="{Binding IsUsingSearchAuthor, Mode=TwoWay}"
+                                          SearchLabel="Search Author"
+                                          SearchText="{Binding SearchAuthorCriteria, Mode=OneWayToSource}" />
+            <Button Grid.Column="2" 
+                    Content="Search"
                     Command="{Binding SearchCommand}"
-                    IsEnabled="{Binding IsBusy, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}" />
-        </StackPanel>
+                    IsEnabled="{Binding CanUseSearchButton}" />
+        </Grid>
         <ItemsControl ItemsSource="{Binding SearchResults}"
                       Grid.Row="2">
             <ItemsControl.ItemTemplate>

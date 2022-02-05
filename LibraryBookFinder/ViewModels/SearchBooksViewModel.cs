@@ -5,10 +5,8 @@
     using LibraryBookFinder.Models;
     using Prism.Commands;
     using Prism.Regions;
-    using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
-    using System.Windows.Threading;
 
     public class SearchBooksViewModel : NotifyPropertyChangedModel
     {
@@ -23,6 +21,10 @@
         private int currentPaginationOffset;
         private int paginationBlockLength;
         private BookCollection colection;
+        private string searchTitleCriteria;
+        private bool isUsingSearchTitle;
+        private string searchAuthorCriteria;
+        private bool isUsingSearchAuthor;
 
         public SearchBooksViewModel(
             IRegionManager regionManager,
@@ -33,44 +35,41 @@
 
             this.currentPaginationOffset = 0;
             this.paginationBlockLength = 10;
+
+            this.IsUsingSearchTitle = true;
+            this.IsUsingSearchAuthor = false;
         }
 
         public ICommand SearchCommand
         {
-            get
-            {
-                return this.searchCommand ?? (this.searchCommand = new DelegateCommand(this.OnSearchRequest));
-            }
+            get => this.searchCommand ?? (this.searchCommand = new DelegateCommand(this.OnSearchRequest));
         }
 
         public ICommand ChangePageResultsCommand
         {
-            get
-            {
-                return this.changePageResultsCommand ?? (this.changePageResultsCommand = new DelegateCommand<int?>(this.OnChangePageResultsRequest));
-            }
+            get => this.changePageResultsCommand ?? (this.changePageResultsCommand = new DelegateCommand<int?>(this.OnChangePageResultsRequest));
         }
 
         public bool IsBusy
         {
-            get
-            {
-                return this.isBusy;
-            }
+            get => this.isBusy;
 
             set
             {
                 this.isBusy = value;
                 this.RaisePropertyChange(nameof(this.IsBusy));
+                this.RaisePropertyChange(nameof(this.CanUseSearchButton));
             }
+        }
+
+        public bool CanUseSearchButton
+        {
+            get => !this.IsBusy && (this.IsUsingSearchTitle || this.IsUsingSearchAuthor);
         }
 
         public ObservableCollection<Book> SearchResults
         {
-            get
-            {
-                return this.searchResults ?? (this.searchResults = new ObservableCollection<Book>());
-            }
+            get => this.searchResults ?? (this.searchResults = new ObservableCollection<Book>());
 
             set
             {
@@ -94,9 +93,55 @@
 
         public bool AreSearchResultsAvailable
         {
-            get
+            get => this.colection?.TotalItemsExpected > 0;
+        }
+
+        public string SearchTitleCriteria
+        {
+            get => this.searchTitleCriteria;
+
+            set
             {
-                return this.colection?.TotalItemsExpected > 0;
+                this.searchTitleCriteria = value;
+                bool validation = this.googleBookService.CheckIfInputIsValid(this.searchTitleCriteria);
+                System.Diagnostics.Debug.WriteLine(validation);
+
+                this.RaisePropertyChange(nameof(this.SearchTitleCriteria));
+            }
+        }
+
+        public bool IsUsingSearchTitle
+        {
+            get => this.isUsingSearchTitle;
+
+            set
+            {
+                this.isUsingSearchTitle = value;
+                this.RaisePropertyChange(nameof(this.IsUsingSearchTitle));
+                this.RaisePropertyChange(nameof(this.CanUseSearchButton));
+            }
+        }
+
+        public string SearchAuthorCriteria
+        {
+            get => this.searchAuthorCriteria;
+
+            set
+            {
+                this.searchAuthorCriteria = value;
+                this.RaisePropertyChange(nameof(this.SearchAuthorCriteria));
+            }
+        }
+
+        public bool IsUsingSearchAuthor
+        {
+            get => this.isUsingSearchAuthor;
+
+            set
+            {
+                this.isUsingSearchAuthor = value;
+                this.RaisePropertyChange(nameof(this.IsUsingSearchAuthor));
+                this.RaisePropertyChange(nameof(this.CanUseSearchButton));
             }
         }
 
@@ -107,7 +152,7 @@
 
             try
             {
-                this.colection = await this.googleBookService.RequestBooks("The", this.currentPaginationOffset, this.paginationBlockLength);
+                this.colection = await this.googleBookService.RequestBooks(this.SearchTitleCriteria, this.currentPaginationOffset, this.paginationBlockLength);
                 this.SearchResults.AddRange(colection.Books);
             }
             catch

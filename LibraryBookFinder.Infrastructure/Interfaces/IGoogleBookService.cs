@@ -6,5 +6,7 @@
     public interface IGoogleBookService
     {
         Task<BookCollection> RequestBooks(string titleSearch, int paginationOffset, int paginationLenth = 10);
+
+        bool CheckIfInputIsValid(string input);
     }
 }

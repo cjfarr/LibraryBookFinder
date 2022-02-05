@@ -5,15 +5,18 @@
     using Newtonsoft.Json;
     using System.IO;
     using System.Net.Http;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public class GoogleBookService : IGoogleBookService
     {
         private readonly HttpClient httpClient;
+        private readonly Regex inputValidation;
 
         public GoogleBookService()
         {
             this.httpClient = new HttpClient();
+            this.inputValidation = new Regex(@"^\d+$");
         }
 
         public async Task<BookCollection> RequestBooks(string titleSearch, int paginationOffset, int paginationLenth = 10)
@@ -31,6 +34,26 @@
             }
 
             return collection;   
+        }
+
+        public bool CheckIfInputIsValid(string input)
+        {
+            if (input?.Length >= 50)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input))
+            {
+                return false;
+            }
+
+            if (this.inputValidation.IsMatch(input))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
