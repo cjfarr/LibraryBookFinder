@@ -21,7 +21,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Border BorderThickness="1"
-                BorderBrush="Black"
+                BorderBrush="{DynamicResource LightCharcoalBrush}"
                 Grid.RowSpan="2"
                 MaxHeight="68">
             <Image Source="{Binding ImageThumbnail}"
@@ -49,6 +49,7 @@
                       Margin="0,5"/>
         <Separator Grid.Row="2"
                    Grid.ColumnSpan="4"
-                   Height="2" />
+                   Height="2"
+                   Background="{DynamicResource LightCharcoalBrush}" />
     </Grid>
 </UserControl>

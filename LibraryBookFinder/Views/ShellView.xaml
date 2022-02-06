@@ -25,7 +25,7 @@
         </Grid.RowDefinitions>
         <Border HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="#FF5F5F5F">
+                Background="{DynamicResource CharcoalBrush}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
