@@ -5,6 +5,7 @@
     using LibraryBookFinder.Models;
     using Prism.Commands;
     using Prism.Regions;
+    using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
 
@@ -195,8 +196,9 @@
                 this.colection = await this.googleBookService.RequestBooks(this.SearchTitleCriteria, this.currentPaginationOffset, this.paginationBlockLength);
                 this.SearchResults.AddRange(colection.Books);
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex);
             }
             finally
             {

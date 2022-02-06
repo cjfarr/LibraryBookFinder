@@ -57,14 +57,17 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <ItemsControl ItemsSource="{Binding SearchResults}"
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                          VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding SearchResults}"
                           HorizontalAlignment="Stretch">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <controls:BookResultControl />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <controls:BookResultControl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <TextBox x:Name="debugOnlyJsonTextBox"
                      Grid.Column="1"
                      Text="{Binding LastJsonResponse, Mode=OneWay}"

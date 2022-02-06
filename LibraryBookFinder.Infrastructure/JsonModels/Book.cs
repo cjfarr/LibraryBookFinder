@@ -2,10 +2,17 @@
 {
     using Newtonsoft.Json;
     using System;
+    using System.Linq;
 
     [JsonObject]
     public class Book
     {
+        public static Uri ThumbnailNotFoundUri
+        {
+            get;
+            set;
+        }
+
         [JsonProperty("volumeInfo")]
         public VolumeInfo VolumeInfo
         {
@@ -33,7 +40,41 @@
         {
             get
             {
-                return this.VolumeInfo?.Images?.Thumbnail;
+                if (!string.IsNullOrEmpty(this.VolumeInfo?.Images?.Thumbnail?.AbsolutePath))
+                {
+                    return this.VolumeInfo.Images.Thumbnail;
+                }
+
+                return ThumbnailNotFoundUri;
+            }
+        }
+
+        public string Publisher
+        {
+            get
+            {
+                return string.IsNullOrEmpty(this.VolumeInfo?.Publisher) ? "Unknown" : this.VolumeInfo.Publisher;
+            }
+        }
+
+        public string PublishDate
+        {
+            get
+            {
+                return string.IsNullOrEmpty(this.VolumeInfo?.PublishedDate) ? "Unknown" : this.VolumeInfo.PublishedDate;
+            }
+        }
+
+        public string[] Isbn
+        {
+            get
+            {
+                if (this.VolumeInfo?.Isbn?.Length <= 0)
+                {
+                    return new string[0];
+                }
+
+                return this.VolumeInfo.Isbn.Select(i => i.ToString()).ToArray();
             }
         }
     }

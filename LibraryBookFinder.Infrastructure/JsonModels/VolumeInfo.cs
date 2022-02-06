@@ -25,5 +25,26 @@
             get;
             set;
         }
+
+        [JsonProperty("publisher")]
+        public string Publisher
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("publishedDate")]
+        public string PublishedDate
+        {
+            get;
+            set;
+        }
+
+        [JsonProperty("industryIdentifiers")]
+        public IsbnInfo[] Isbn
+        {
+            get;
+            set;
+        }
     }
 }

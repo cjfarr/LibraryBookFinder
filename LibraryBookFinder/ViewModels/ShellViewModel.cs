@@ -2,6 +2,7 @@
 {
     using LibraryBookFinder.Constants;
     using LibraryBookFinder.Events;
+    using LibraryBookFinder.Infrastructure.JsonModels;
     using LibraryBookFinder.Models;
     using LibraryBookFinder.Views;
     using Prism.Commands;
@@ -26,6 +27,8 @@
         { 
             this.regionManager = regionManager;
             this.eventAggregator = eventAggregator;
+
+            Book.ThumbnailNotFoundUri = new Uri("pack://application:,,,/Assets/MissingThumbnailIcon.png");
 
             NavigateViewsEvent navigateViewsEvent = this.eventAggregator.GetEvent<NavigateViewsEvent>();
             this.navigateViewsSubscription = navigateViewsEvent.Subscribe(this.OnNavigateViewsEvent, ThreadOption.UIThread, true);
