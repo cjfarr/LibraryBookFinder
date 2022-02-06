@@ -2,12 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Color x:Shared="False" x:Key="DodgerBlue">#FF1A73E8</Color>
     <Color x:Shared="False" x:Key="LightDodgerBlue">#FF237DF0</Color>
+    <Color x:Shared="False" x:Key="LightestDodgerBlue">#FF2882F5</Color>
     <Color x:Shared="False" x:Key="Charcoal">#FF424242</Color>
     <Color x:Shared="False" x:Key="LightCharcoal">#FFA8A8A8</Color>
+    <Color x:Shared="False" x:Key="Ash">#FFBDBDBD</Color>
     <SolidColorBrush x:Shared="False" x:Key="DodgerBlueBrush" Color="{DynamicResource ResourceKey=DodgerBlue}" />
     <SolidColorBrush x:Shared="False" x:Key="LightDodgerBlueBrush" Color="{DynamicResource ResourceKey=LightDodgerBlue}" />
+    <SolidColorBrush x:Shared="False" x:Key="LightestDodgerBlueBrush" Color="{DynamicResource ResourceKey=LightestDodgerBlue}" />
     <SolidColorBrush x:Shared="False" x:Key="CharcoalBrush" Color="{DynamicResource ResourceKey=Charcoal}" />
     <SolidColorBrush x:Shared="False" x:Key="LightCharcoalBrush" Color="{DynamicResource ResourceKey=LightCharcoal}" />
+    <SolidColorBrush x:Shared="False" x:Key="AshBrush" Color="{DynamicResource ResourceKey=Ash}" />
     <Style TargetType="Button">
         <Setter Property="OverridesDefaultStyle"
                 Value="True" />
@@ -17,6 +21,8 @@
                 Value="125" />
         <Setter Property="Foreground"
                 Value="White" />
+        <Setter Property="FontSize"
+                Value="16" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -43,6 +49,44 @@
                                               VerticalAlignment="Center"
                                               RecognizesAccessKey="True" />
                         </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.2"/>
+                                    <VisualTransition GeneratedDuration="0"
+                                                      To="Pressed"/>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                                      Storyboard.TargetName="firstBackgroundBorder">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                                                 Value="{StaticResource ResourceKey=LightDodgerBlue}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                                      Storyboard.TargetName="secondBackgroundBorder">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                                                 Value="{StaticResource ResourceKey=LightestDodgerBlue}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                                      Storyboard.TargetName="firstBackgroundBorder">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                                                 Value="{StaticResource ResourceKey=LightCharcoal}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
+                                                                      Storyboard.TargetName="secondBackgroundBorder">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                                                 Value="{StaticResource ResourceKey=Ash}" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

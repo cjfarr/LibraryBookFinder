@@ -69,9 +69,9 @@
         {
             get
             {
-                if (this.VolumeInfo?.Isbn?.Length <= 0)
+                if (this.VolumeInfo?.Isbn == null)
                 {
-                    return new string[0];
+                    return new string[] { "Unknown" };
                 }
 
                 return this.VolumeInfo.Isbn.Select(i => i.ToString()).ToArray();
