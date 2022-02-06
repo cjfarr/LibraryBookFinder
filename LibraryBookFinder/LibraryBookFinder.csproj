@@ -115,6 +115,7 @@
     <Compile Include="Controls\OptionalSearchField.xaml.cs">
       <DependentUpon>OptionalSearchField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToOppositeConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Events\NavigateViewsEvent.cs" />
     <Compile Include="Models\NotifyPropertyChangedModel.cs" />

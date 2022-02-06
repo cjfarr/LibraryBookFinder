@@ -29,7 +29,7 @@
         <TextBox x:Name="searchFieldTextBox"
                  Grid.Row="2"
                  Grid.ColumnSpan="2"
-                 Text="{Binding Path=SearchText, ElementName=optionalSearchField, UpdateSourceTrigger=LostFocus}"
+                 Text="{Binding Path=SearchText, ElementName=optionalSearchField, UpdateSourceTrigger=PropertyChanged}"
                  MaxLength="50" />
     </Grid>
 </UserControl>

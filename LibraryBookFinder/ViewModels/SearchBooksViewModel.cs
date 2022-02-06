@@ -37,7 +37,7 @@
             this.googleBookService = googleBookService;
 
             this.currentPaginationOffset = 0;
-            this.paginationBlockLength = 10;
+            this.paginationBlockLength = 40;
 
             this.IsUsingSearchTitle = true;
             this.IsUsingSearchAuthor = false;
@@ -45,7 +45,12 @@
 
         public ICommand SearchCommand
         {
-            get => this.searchCommand ?? (this.searchCommand = new DelegateCommand(this.OnSearchRequest));
+            get => this.searchCommand ?? (this.searchCommand = new DelegateCommand(() =>
+            {
+                ////Treat the main search command as a new search with pagination going back to zero.
+                this.currentPaginationOffset = 0;
+                this.OnSearchRequest();
+            }));
         }
 
         public ICommand ChangePageResultsCommand
@@ -76,7 +81,9 @@
 
         public bool CanUseSearchButton
         {
-            get => !this.IsBusy && (this.IsUsingSearchTitle || this.IsUsingSearchAuthor);
+            get => !this.IsBusy && 
+                (this.ValidateFieldInput(this.IsUsingSearchTitle, this.SearchTitleCriteria) || 
+                this.ValidateFieldInput(this.IsUsingSearchAuthor, this.SearchAuthorCriteria));
         }
 
         public ObservableCollection<Book> SearchResults
@@ -99,7 +106,7 @@
                     return string.Empty;
                 }
 
-                return $"Viewing {this.currentPaginationOffset + 1} - {this.currentPaginationOffset + 1 + this.paginationBlockLength} out of {this.colection.TotalItemsExpected}";
+                return $"Viewing {this.currentPaginationOffset + 1} - {this.currentPaginationOffset + this.paginationBlockLength} out of {this.colection.TotalItemsExpected}";
             }
         }
 
@@ -115,10 +122,8 @@
             set
             {
                 this.searchTitleCriteria = value;
-                bool validation = this.googleBookService.CheckIfInputIsValid(this.searchTitleCriteria);
-                System.Diagnostics.Debug.WriteLine(validation);
-
                 this.RaisePropertyChange(nameof(this.SearchTitleCriteria));
+                this.RaisePropertyChange(nameof(this.CanUseSearchButton));
             }
         }
 
@@ -142,6 +147,7 @@
             {
                 this.searchAuthorCriteria = value;
                 this.RaisePropertyChange(nameof(this.SearchAuthorCriteria));
+                this.RaisePropertyChange(nameof(this.CanUseSearchButton));
             }
         }
 
@@ -198,6 +204,7 @@
             }
             catch (Exception ex)
             {
+                ////TODO.  Exception message
                 System.Diagnostics.Debug.WriteLine(ex);
             }
             finally
@@ -205,6 +212,7 @@
                 this.IsBusy = false;
                 this.RaisePropertyChange(nameof(this.ViewPositionMessage));
                 this.RaisePropertyChange(nameof(this.AreSearchResultsAvailable));
+                this.RaisePropertyChange(nameof(this.LastJsonResponse));
             }
         }
 
@@ -213,8 +221,23 @@
             if (direction.HasValue)
             {
                 this.currentPaginationOffset += this.paginationBlockLength * direction.Value;
+                if (this.currentPaginationOffset < 0)
+                {
+                    this.currentPaginationOffset = 0;
+                }
+
                 this.OnSearchRequest();
             }
+        }
+
+        private bool ValidateFieldInput(bool isUsingField, string input)
+        {
+            if (!isUsingField)
+            {
+                return false;
+            }
+
+            return this.googleBookService.CheckIfInputIsValid(input);
         }
     }
 }

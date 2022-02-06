@@ -12,6 +12,7 @@
              d:DesignWidth="800">
     <UserControl.Resources>
         <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+        <converters:BoolToOppositeConverter x:Key="boolToOppositeConverter" />
         <sys:Int32 x:Key="nextDirection">1</sys:Int32>
         <sys:Int32 x:Key="previousDirection">-1</sys:Int32>
     </UserControl.Resources>
@@ -75,10 +76,11 @@
                      TextWrapping="WrapWithOverflow"
                      MaxWidth="500"
                      Margin="20,0"
-                     Visibility="{Binding ShowJsonResults, Converter={StaticResource boolToVisibilityConverter}}"/>
+                     Visibility="{Binding Path=ShowJsonResults, Converter={StaticResource boolToVisibilityConverter}}"/>
         </Grid>
         <Grid Grid.Row="3"
-              Visibility="{Binding AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}">
+              Visibility="{Binding Path=AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}"
+              IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToOppositeConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
