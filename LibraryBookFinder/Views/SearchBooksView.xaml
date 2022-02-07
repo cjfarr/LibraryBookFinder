@@ -45,7 +45,8 @@
                 <Button Content="Search"
                         Command="{Binding SearchCommand}"
                         IsEnabled="{Binding CanUseSearchButton}"
-                        Margin="10,0,0,0"/>
+                        Margin="10,0,0,0"
+                        IsDefault="True" />
                 <Button Content="Show Json"
                         HorizontalAlignment="Right"
                         Margin="10,0,0,0"

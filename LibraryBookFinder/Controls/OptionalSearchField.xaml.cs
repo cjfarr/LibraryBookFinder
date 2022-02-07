@@ -1,8 +1,9 @@
 ﻿namespace LibraryBookFinder.Controls
 {
+    using System;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
+    using System.Windows.Threading;
 
     /// <summary>
     /// Interaction logic for OptionalSearchField.xaml
@@ -57,12 +58,28 @@
             set => SetValue(IsUsingFieldProperty, value);
         }
 
+        public void FocusSearchTextBox()
+        {
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(delegate ()
+                {
+                    this.searchFieldTextBox.Focus();
+                }));
+        }
+
         private static void OnIsUsingFieldCheckChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
             OptionalSearchField control = sender as OptionalSearchField;
-            if (args.NewValue is bool isUsingField && !isUsingField)
+            if (args.NewValue is bool isUsingField)
             {
-                control.SearchText = string.Empty;
+                if (isUsingField)
+                {
+                    control.FocusSearchTextBox();
+                }
+                else
+                {
+                    control.SearchText = string.Empty;
+                }
             }
         }
     }
