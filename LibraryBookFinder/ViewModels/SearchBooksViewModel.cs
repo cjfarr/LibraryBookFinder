@@ -249,7 +249,6 @@
                 this.colection = await this.googleBookService.RequestBooks(url);
                 if (this.colection.Books.Count > 0)
                 {
-                    this.colection = null;
                     this.SearchResults.AddRange(colection.Books);
                 }
                 else
