@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <ToggleButton x:Name="onOffToggleButton"
                       IsThreeState="False"
-                      IsChecked="{Binding Path=IsUsingField, ElementName=optionalSearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding Path=IsUsingField, ElementName=optionalSearchField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <TextBlock x:Name="labelTextBlock"
                    Grid.Column="1"
                    VerticalAlignment="Center"
@@ -30,6 +30,7 @@
                  Grid.Row="2"
                  Grid.ColumnSpan="2"
                  Text="{Binding Path=SearchText, ElementName=optionalSearchField, UpdateSourceTrigger=PropertyChanged}"
+                 IsEnabled="{Binding Path=IsUsingField, ElementName=optionalSearchField}"
                  MaxLength="50" />
     </Grid>
 </UserControl>

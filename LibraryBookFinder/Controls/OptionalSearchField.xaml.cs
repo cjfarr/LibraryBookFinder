@@ -2,6 +2,7 @@
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
 
     /// <summary>
     /// Interaction logic for OptionalSearchField.xaml
@@ -29,7 +30,8 @@
             IsUsingFieldProperty = DependencyProperty.Register(
                 nameof(OptionalSearchField.IsUsingField),
                 typeof(bool),
-                typeof(OptionalSearchField));
+                typeof(OptionalSearchField),
+                new PropertyMetadata(false, new PropertyChangedCallback(OnIsUsingFieldCheckChanged)));
         }
 
         public OptionalSearchField()
@@ -53,6 +55,15 @@
         {
             get => (bool)GetValue(IsUsingFieldProperty);
             set => SetValue(IsUsingFieldProperty, value);
+        }
+
+        private static void OnIsUsingFieldCheckChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+        {
+            OptionalSearchField control = sender as OptionalSearchField;
+            if (args.NewValue is bool isUsingField && !isUsingField)
+            {
+                control.SearchText = string.Empty;
+            }
         }
     }
 }
