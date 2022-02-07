@@ -25,7 +25,8 @@
         </Grid.RowDefinitions>
         <Border HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
-                Background="{DynamicResource CharcoalBrush}">
+                Background="{DynamicResource CharcoalBrush}"
+                MinHeight="50">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -37,11 +38,12 @@
                         Height="40"
                         Width="40"
                         Margin="20,10"
+                        ToolTip="Clear Search, Return to Main"
                         Command="{Binding ReturnToMainViewCommand}"
                         Visibility="{Binding Path=CanUseBackButton, Converter={StaticResource booltoVisibilityConverter}}"/>
                 <Button x:Name="quitButton"
                         Grid.Column="1"
-                        Content="Quit [DEBUG ONLY]" 
+                        Content="&lt;&lt;Quit&gt;&gt;" 
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         Margin="10"

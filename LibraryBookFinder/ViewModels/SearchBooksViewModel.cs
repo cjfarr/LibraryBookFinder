@@ -14,6 +14,7 @@
     {
         private readonly IRegionManager regionManager;
         private readonly IGoogleBookService googleBookService;
+        private readonly ILoggingService loggingService;
 
         private ICommand searchCommand;
         private ICommand changePageResultsCommand;
@@ -33,10 +34,12 @@
 
         public SearchBooksViewModel(
             IRegionManager regionManager,
-            IGoogleBookService googleBookService)
+            IGoogleBookService googleBookService,
+            ILoggingService loggingService)
         {
             this.regionManager = regionManager;
             this.googleBookService = googleBookService;
+            this.loggingService = loggingService;
 
             this.currentPaginationOffset = 0;
             this.paginationBlockLength = 40;
@@ -244,7 +247,22 @@
                     this.paginationBlockLength);
 
                 this.colection = await this.googleBookService.RequestBooks(url);
-                this.SearchResults.AddRange(colection.Books);
+                if (this.colection.Books.Count > 0)
+                {
+                    this.colection = null;
+                    this.SearchResults.AddRange(colection.Books);
+                }
+                else
+                {
+                    this.UserMessage = this.colection.TotalItemsExpected > 0 ? "No additional books found." : "No books were found.";
+                }
+            }
+            catch (MissingSearchCriteriaException)
+            {
+                ////I don't anticipate this one to happen since properties should
+                ////be disabling the Search button for this, but this would be another
+                ////step in future proofing possible bugs that lets no input slip through.
+                this.UserMessage = "No title or author was given to search on.";
             }
             catch (NoNetworkException)
             {
@@ -252,8 +270,9 @@
             }
             catch (Exception ex)
             {
-                ////TODO.  Exception message
-                System.Diagnostics.Debug.WriteLine(ex);
+                this.UserMessage = "Error occurred. Please see attendant.";
+                ////Something un-anticipated has happened if we get to here, lets log to local app data for evidence.
+                this.loggingService.LogException(ex);
             }
             finally
             {

@@ -76,6 +76,7 @@
     <Compile Include="Exceptions\MissingSearchCriteriaException.cs" />
     <Compile Include="Exceptions\NoNetworkException.cs" />
     <Compile Include="Interfaces\IGoogleBookService.cs" />
+    <Compile Include="Interfaces\ILoggingService.cs" />
     <Compile Include="JsonModels\Book.cs" />
     <Compile Include="JsonModels\BookCollection.cs" />
     <Compile Include="JsonModels\ImageLinks.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="JsonModels\VolumeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GoogleBookService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

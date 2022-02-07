@@ -5,7 +5,6 @@
     using LibraryBookFinder.ViewModels;
     using LibraryBookFinder.Views;
     using Prism.Ioc;
-    using Prism.Mvvm;
     using Prism.Unity;
     using System.Configuration;
     using System.Windows;
@@ -25,6 +24,7 @@
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(typeof(IGoogleBookService), new GoogleBookService(ConfigurationManager.AppSettings["BaseGoogleBookApiUrl"]));
+            containerRegistry.RegisterInstance(typeof(ILoggingService), new LoggingService());
             containerRegistry.RegisterForNavigation<MainView, MainViewModel>();
             containerRegistry.RegisterForNavigation<SearchBooksView, SearchBooksViewModel>();
         }

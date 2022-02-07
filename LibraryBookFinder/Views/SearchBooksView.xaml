@@ -47,7 +47,7 @@
                         IsEnabled="{Binding CanUseSearchButton}"
                         Margin="10,0,0,0"
                         IsDefault="True" />
-                <Button Content="Show Json"
+                <Button Content="&lt;&lt;Show Json&gt;&gt;"
                         HorizontalAlignment="Right"
                         Margin="10,0,0,0"
                         Visibility="{Binding CanViewJsonResponse, Converter={StaticResource boolToVisibilityConverter}}"
