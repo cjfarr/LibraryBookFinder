@@ -19,7 +19,6 @@
 
         public MainView(IRegionManager regionManager) : base()
         {
-            this.ClockMinuteHandAngle = 190;
             this.InitializeComponent();
 
             Canvas canvas = this.libraryArtContentPresenter.Content as Canvas;
@@ -32,12 +31,6 @@
             this.clockArtHourHand = hourHand.RenderTransform as RotateTransform;
 
             this.OnTimerTick(this, null);
-        }
-
-        public double ClockMinuteHandAngle
-        {
-            get;
-            set;
         }
 
         protected override void OnTimerTick(object sender, EventArgs e)
