@@ -79,6 +79,7 @@
                      Visibility="{Binding Path=ShowJsonResults, Converter={StaticResource boolToVisibilityConverter}}"/>
         </Grid>
         <Grid Grid.Row="3"
+              Background="{DynamicResource CharcoalBrush}"
               Visibility="{Binding Path=AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}"
               IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToOppositeConverter}}">
             <Grid.ColumnDefinitions>
@@ -86,6 +87,10 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
             <Button x:Name="previousButton" 
                     Content="Previous"
                     Margin="10"

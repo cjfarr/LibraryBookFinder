@@ -10,7 +10,9 @@
             get; 
         }
 
-        Task<BookCollection> RequestBooks(string titleSearch, int paginationOffset, int paginationLenth = 10);
+        string BuildGetRequestUrl(string titleSearchCriteria, string authorSearchCriteria, int paginationOffset, int paginationLength = 10);
+
+        Task<BookCollection> RequestBooks(string url);
 
         bool CheckIfInputIsValid(string input);
     }

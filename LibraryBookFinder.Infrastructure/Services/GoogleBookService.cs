@@ -1,5 +1,6 @@
 ﻿namespace LibraryBookFinder.Infrastructure.Services
 {
+    using LibraryBookFinder.Infrastructure.Exceptions;
     using LibraryBookFinder.Infrastructure.Interfaces;
     using LibraryBookFinder.Infrastructure.JsonModels;
     using Newtonsoft.Json;
@@ -13,8 +14,11 @@
         private readonly HttpClient httpClient;
         private readonly Regex inputValidation;
 
-        public GoogleBookService()
+        private string baseUri; 
+
+        public GoogleBookService(string baseGoogleBookApiUrl)
         {
+            this.baseUri = baseGoogleBookApiUrl;
             this.httpClient = new HttpClient();
             this.inputValidation = new Regex(@"^\d+$");
         }
@@ -25,12 +29,11 @@
             private set;
         }
 
-        public async Task<BookCollection> RequestBooks(string titleSearch, int paginationOffset, int paginationLenth = 10)
+        public async Task<BookCollection> RequestBooks(string url)
         {
-            string uri = $"https://www.googleapis.com/books/v1/volumes?q={titleSearch}&startIndex={paginationOffset}&maxResults={paginationLenth}";
             BookCollection collection = null;
 
-            Task<string> result = this.httpClient.GetStringAsync(uri);
+            Task<string> result = this.httpClient.GetStringAsync(url);
             this.LastJsonResponse = await result.ConfigureAwait(false);
 
             using (JsonReader reader = new JsonTextReader(new StringReader(this.LastJsonResponse)))
@@ -40,6 +43,30 @@
             }
 
             return collection;   
+        }
+
+        public string BuildGetRequestUrl(string titleSearchCriteria, string authorSearchCriteria, int paginationOffset, int paginationLength = 10)
+        {
+            if (string.IsNullOrEmpty(titleSearchCriteria) && string.IsNullOrEmpty(authorSearchCriteria))
+            {
+                throw new MissingSearchCriteriaException();
+            }
+
+            string url = string.Empty;
+            if (string.IsNullOrEmpty(authorSearchCriteria))
+            {
+                url = $"{this.baseUri}?q=+intitle:{titleSearchCriteria}&startIndex={paginationOffset}&maxResults={paginationLength}";
+            }
+            else if (string.IsNullOrEmpty(titleSearchCriteria))
+            {
+                url = $"{this.baseUri}?q=+inauthor:{authorSearchCriteria}&startIndex={paginationOffset}&maxResults={paginationLength}";
+            }
+            else
+            {
+                url = $"{this.baseUri}?q=+intitle:{titleSearchCriteria}+inauthor:{authorSearchCriteria}&startIndex={paginationOffset}&maxResults={paginationLength}";
+            }
+
+            return url;
         }
 
         public bool CheckIfInputIsValid(string input)

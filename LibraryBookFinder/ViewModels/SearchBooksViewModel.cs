@@ -199,7 +199,13 @@
 
             try
             {
-                this.colection = await this.googleBookService.RequestBooks(this.SearchTitleCriteria, this.currentPaginationOffset, this.paginationBlockLength);
+                string url = this.googleBookService.BuildGetRequestUrl(
+                    this.SearchTitleCriteria, 
+                    this.SearchAuthorCriteria, 
+                    this.currentPaginationOffset, 
+                    this.paginationBlockLength);
+
+                this.colection = await this.googleBookService.RequestBooks(url);
                 this.SearchResults.AddRange(colection.Books);
             }
             catch (Exception ex)

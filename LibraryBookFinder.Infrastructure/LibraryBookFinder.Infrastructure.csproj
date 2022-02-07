@@ -73,6 +73,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\MissingSearchCriteriaException.cs" />
     <Compile Include="Interfaces\IGoogleBookService.cs" />
     <Compile Include="JsonModels\Book.cs" />
     <Compile Include="JsonModels\BookCollection.cs" />

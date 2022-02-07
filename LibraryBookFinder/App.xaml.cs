@@ -7,6 +7,7 @@
     using Prism.Ioc;
     using Prism.Mvvm;
     using Prism.Unity;
+    using System.Configuration;
     using System.Windows;
 
     /// <summary>
@@ -23,7 +24,7 @@
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance(typeof(IGoogleBookService), new GoogleBookService());
+            containerRegistry.RegisterInstance(typeof(IGoogleBookService), new GoogleBookService(ConfigurationManager.AppSettings["BaseGoogleBookApiUrl"]));
             containerRegistry.RegisterForNavigation<MainView, MainViewModel>();
             containerRegistry.RegisterForNavigation<SearchBooksView, SearchBooksViewModel>();
         }
