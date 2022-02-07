@@ -80,11 +80,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Assets\MainScreenVectorArt.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\BookResultControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BusySpinner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -116,6 +116,9 @@
     <Compile Include="Controls\BookResultControl.xaml.cs">
       <DependentUpon>BookResultControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BusySpinner.xaml.cs">
+      <DependentUpon>BusySpinner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OptionalSearchField.xaml.cs">
       <DependentUpon>OptionalSearchField.xaml</DependentUpon>
     </Compile>
@@ -126,7 +129,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\SearchBooksViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="Views\BaseTimerView.cs" />
+    <Compile Include="Controls\BaseTimerControl.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>

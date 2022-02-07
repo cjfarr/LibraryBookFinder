@@ -1,17 +1,17 @@
 ﻿namespace LibraryBookFinder.Views
 {
     using LibraryBookFinder.Constants;
+    using LibraryBookFinder.Controls;
     using LibraryBookFinder.Events;
     using Prism.Events;
     using Prism.Regions;
     using System;
-    using System.Windows.Controls;
     using System.Windows.Input;
 
     /// <summary>
     /// Interaction logic for SearchBooksView.xaml
     /// </summary>
-    public partial class SearchBooksView : BaseTimerView
+    public partial class SearchBooksView : BaseTimerControl
     {
         private readonly IRegionManager regionManager;
         private readonly IEventAggregator eventAggregator;

@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="LibraryBookFinder.Controls.BusySpinner"
+             x:Name="busySpinner"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" 
+             d:DesignWidth="100">
+    <Viewbox Width="99.9875" Height="99.9875">
+        <Canvas Width="99.9875" Height="99.9875">
+            <Rectangle Width="99.9875" Height="99.9875" Canvas.Left="9.01719e-008" Canvas.Top="-6.10352e-005" Stretch="Fill" />
+            <Path Width="94.9881" Height="94.9881" Canvas.Left="2.4997" Canvas.Top="2.49988" Stretch="Fill" Fill="{DynamicResource CharcoalBrush}" Data="F1 M 49.9938,2.49988C 76.2241,2.49988 97.4878,23.7636 97.4878,49.9939C 97.4878,76.2241 76.224,97.488 49.9938,97.488C 23.7635,97.488 2.4997,76.2241 2.4997,49.9939C 2.4997,23.7636 23.7635,2.49988 49.9938,2.49988 Z M 49.9938,14.9983C 30.6663,14.9983 14.9981,30.6664 14.9981,49.9939C 14.9981,69.3214 30.6662,84.9896 49.9938,84.9896C 69.3213,84.9896 84.9894,69.3214 84.9894,49.9939C 84.9894,30.6664 69.3212,14.9983 49.9938,14.9983 Z "/>
+            <Path Width="44.9944" Height="44.9944" Canvas.Left="49.9937" Canvas.Top="4.99945" Stretch="Fill" Fill="{DynamicResource AshBrush}" Data="F1 M 49.9938,4.99945C 74.8434,4.99945 94.9881,25.1441 94.9881,49.9938L 87.489,49.9939C 87.489,29.2859 70.7018,12.4987 49.9937,12.4987L 49.9938,4.99945 Z ">
+                <Path.RenderTransform>
+                    <RotateTransform x:Name="arcTransform" 
+                                     CenterX="0"
+                                     CenterY="44.944"
+                                     Angle="0" />
+                </Path.RenderTransform>
+                <Path.Style>
+                    <Style TargetType="Path">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=Visibility, ElementName=busySpinner}" Value="Visible">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="(Path.RenderTransform).(RotateTransform.Angle)"
+                                                             From="0"
+                                                             To="360"
+                                                             Duration="0:0:2"
+                                                             RepeatBehavior="Forever" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </Canvas>
+    </Viewbox>
+</UserControl>

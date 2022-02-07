@@ -1,5 +1,6 @@
 ﻿namespace LibraryBookFinder.Views
 {
+    using LibraryBookFinder.Controls;
     using Prism.Regions;
     using System;
     using System.Linq;
@@ -11,7 +12,7 @@
     /// <summary>
     /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainView : BaseTimerView
+    public partial class MainView : BaseTimerControl
     {
         private RotateTransform clockArtMinuteHand;
         private RotateTransform clockArtHourHand;
