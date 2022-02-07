@@ -86,6 +86,16 @@
                 this.ValidateFieldInput(this.IsUsingSearchAuthor, this.SearchAuthorCriteria));
         }
 
+        public bool CanUsePreviousButton
+        {
+            get => this.currentPaginationOffset > 0 && this.colection != null;
+        }
+
+        public bool CanUseNextButton
+        {
+            get => this.colection?.TotalItemsExpected > 0 && this.currentPaginationOffset + this.paginationBlockLength < this.colection.TotalItemsExpected;
+        }
+
         public ObservableCollection<Book> SearchResults
         {
             get => this.searchResults ?? (this.searchResults = new ObservableCollection<Book>());
@@ -106,7 +116,13 @@
                     return string.Empty;
                 }
 
-                return $"Viewing {this.currentPaginationOffset + 1} - {this.currentPaginationOffset + this.paginationBlockLength} out of {this.colection.TotalItemsExpected}";
+                int highestResult = this.currentPaginationOffset + this.paginationBlockLength;
+                if (highestResult > this.colection.TotalItemsExpected)
+                {
+                    highestResult = this.colection.TotalItemsExpected;
+                }
+
+                return $"Viewing {this.currentPaginationOffset + 1} - {highestResult} out of {this.colection.TotalItemsExpected}";
             }
         }
 
@@ -219,6 +235,8 @@
                 this.RaisePropertyChange(nameof(this.ViewPositionMessage));
                 this.RaisePropertyChange(nameof(this.AreSearchResultsAvailable));
                 this.RaisePropertyChange(nameof(this.LastJsonResponse));
+                this.RaisePropertyChange(nameof(this.CanUsePreviousButton));
+                this.RaisePropertyChange(nameof(this.CanUseNextButton));
             }
         }
 

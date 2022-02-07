@@ -55,13 +55,25 @@
         <ItemsControl ItemsSource="{Binding Authors}"
                       Grid.Row="1"
                       Grid.Column="2"
-                      Margin="0,5"/>
+                      Margin="0,5,5,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--using wrap because I've noticed on 1024 x 768 it can get cut off sometimes.
+                        Also, just in case, using ToolTip if there is no real-estate left-->
+                    <TextBlock TextWrapping="WrapWithOverflow"
+                               Text="{Binding }"
+                               ToolTip="{Binding }"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <TextBlock Text="Publisher/Date"
                    Grid.Column="3"
                    Style="{DynamicResource miniHeader}" />
         <StackPanel Grid.Column="3"
                     Grid.Row="1">
-            <TextBlock Text="{Binding Publisher}" />
+            <TextBlock Text="{Binding Publisher}"
+                       TextWrapping="WrapWithOverflow"
+                       ToolTip="{Binding Publisher}"/>
             <TextBlock Text="{Binding PublishDate}" />
         </StackPanel>
         <TextBlock Text="ISBN"
@@ -69,7 +81,15 @@
                    Style="{DynamicResource miniHeader}" />
         <ItemsControl Grid.Column="4"
                       Grid.Row="1"
-                      ItemsSource="{Binding Isbn}" />
+                      ItemsSource="{Binding Isbn}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding }"
+                               TextWrapping="WrapWithOverflow"
+                               ToolTip="{Binding }"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Separator Grid.Row="2"
                    Grid.ColumnSpan="5"
                    Height="2"
