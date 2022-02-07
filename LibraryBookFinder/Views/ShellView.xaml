@@ -41,6 +41,7 @@
                         ToolTip="Clear Search, Return to Main"
                         Command="{Binding ReturnToMainViewCommand}"
                         Visibility="{Binding Path=CanUseBackButton, Converter={StaticResource booltoVisibilityConverter}}"/>
+                <!--Quit should only show when #if DEBUG-->
                 <Button x:Name="quitButton"
                         Grid.Column="1"
                         Content="&lt;&lt;Quit&gt;&gt;" 
