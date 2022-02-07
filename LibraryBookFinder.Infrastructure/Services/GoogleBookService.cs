@@ -6,6 +6,7 @@
     using Newtonsoft.Json;
     using System.IO;
     using System.Net.Http;
+    using System.Net.NetworkInformation;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
@@ -31,6 +32,11 @@
 
         public async Task<BookCollection> RequestBooks(string url)
         {
+            if (!NetworkInterface.GetIsNetworkAvailable())
+            {
+                throw new NoNetworkException();
+            }
+
             BookCollection collection = null;
 
             Task<string> result = this.httpClient.GetStringAsync(url);

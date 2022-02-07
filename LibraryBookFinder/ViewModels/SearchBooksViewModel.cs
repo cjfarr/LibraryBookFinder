@@ -1,5 +1,6 @@
 ﻿namespace LibraryBookFinder.ViewModels
 {
+    using LibraryBookFinder.Infrastructure.Exceptions;
     using LibraryBookFinder.Infrastructure.Interfaces;
     using LibraryBookFinder.Infrastructure.JsonModels;
     using LibraryBookFinder.Models;
@@ -28,6 +29,7 @@
         private string searchAuthorCriteria;
         private bool isUsingSearchAuthor;
         private bool showJsonResults;
+        private string userMessage;
 
         public SearchBooksViewModel(
             IRegionManager regionManager,
@@ -41,6 +43,7 @@
 
             this.IsUsingSearchTitle = true;
             this.IsUsingSearchAuthor = false;
+            this.UserMessage = "Search books with controls above.  Use the back button to clear your search and return to Main menu when finished.";
         }
 
         public ICommand SearchCommand
@@ -76,6 +79,7 @@
                 this.isBusy = value;
                 this.RaisePropertyChange(nameof(this.IsBusy));
                 this.RaisePropertyChange(nameof(this.CanUseSearchButton));
+                this.RaisePropertyChange(nameof(this.CanShowUserMessage));
             }
         }
 
@@ -208,6 +212,24 @@
             }
         }
 
+        public string UserMessage
+        {
+            get => this.userMessage;
+
+            set
+            {
+                this.userMessage = value;
+                this.RaisePropertyChange(nameof(this.UserMessage));
+                this.RaisePropertyChange(nameof(this.AreSearchResultsAvailable));
+                this.RaisePropertyChange(nameof(this.CanShowUserMessage));
+            }
+        }
+
+        public bool CanShowUserMessage
+        {
+            get => !this.IsBusy && !this.AreSearchResultsAvailable;
+        }
+
         private async void OnSearchRequest()
         {
             this.SearchResults.Clear();
@@ -223,6 +245,10 @@
 
                 this.colection = await this.googleBookService.RequestBooks(url);
                 this.SearchResults.AddRange(colection.Books);
+            }
+            catch (NoNetworkException)
+            {
+                this.UserMessage = "Please have attendant check network connection.";
             }
             catch (Exception ex)
             {

@@ -19,7 +19,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -41,18 +40,20 @@
                                           SearchLabel="Search Author"
                                           SearchText="{Binding SearchAuthorCriteria, Mode=OneWayToSource}" />
             <StackPanel Grid.Column="2"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        VerticalAlignment="Bottom">
                 <Button Content="Search"
                         Command="{Binding SearchCommand}"
-                        IsEnabled="{Binding CanUseSearchButton}" />
+                        IsEnabled="{Binding CanUseSearchButton}"
+                        Margin="10,0,0,0"/>
                 <Button Content="Show Json"
                         HorizontalAlignment="Right"
-                        Margin="5,0"
+                        Margin="10,0,0,0"
                         Visibility="{Binding CanViewJsonResponse, Converter={StaticResource boolToVisibilityConverter}}"
                         Command="{Binding ShowJsonResponseCommand}" />
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="1"
               HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -72,6 +73,16 @@
             <controls:BusySpinner Width="100"
                                   Height="100"
                                   Visibility="{Binding Path=IsBusy, Converter={StaticResource boolToVisibilityConverter}}"/>
+            <TextBlock x:Name="userMessage"
+                       Foreground="{DynamicResource CharcoalBrush}"
+                       FontSize="24"
+                       Text="{Binding UserMessage}"
+                       Visibility="{Binding CanShowUserMessage, Converter={StaticResource boolToVisibilityConverter}}"
+                       TextWrapping="WrapWithOverflow"
+                       TextAlignment="Center"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="20"/>
             <TextBox x:Name="debugOnlyJsonTextBox"
                      Grid.Column="1"
                      Text="{Binding LastJsonResponse, Mode=OneWay}"
@@ -81,7 +92,7 @@
                      Margin="20,0"
                      Visibility="{Binding Path=ShowJsonResults, Converter={StaticResource boolToVisibilityConverter}}"/>
         </Grid>
-        <Grid Grid.Row="3"
+        <Grid Grid.Row="2"
               Background="{DynamicResource CharcoalBrush}"
               Visibility="{Binding Path=AreSearchResultsAvailable, Converter={StaticResource boolToVisibilityConverter}}"
               IsEnabled="{Binding Path=IsBusy, Converter={StaticResource boolToOppositeConverter}}">

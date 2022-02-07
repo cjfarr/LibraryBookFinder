@@ -6,8 +6,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LibraryBookFinder.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="125" 
-             d:DesignWidth="400">
+             d:DesignHeight="75" 
+             d:DesignWidth="210">
     <Grid Margin="5,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -28,7 +28,11 @@
                    Margin="5,0"/>
         <TextBox x:Name="searchFieldTextBox"
                  Grid.Row="2"
+                 Height="35"
+                 Width="200"
+                 HorizontalAlignment="Left"
                  Grid.ColumnSpan="2"
+                 FontSize="24"
                  Text="{Binding Path=SearchText, ElementName=optionalSearchField, UpdateSourceTrigger=PropertyChanged}"
                  IsEnabled="{Binding Path=IsUsingField, ElementName=optionalSearchField}"
                  MaxLength="50" />
