@@ -243,11 +243,15 @@
             </Canvas>
         </Viewbox>
         <Path Width="5.99927" Height="5.99927" Canvas.Left="287.406" Canvas.Top="89.8908" Stretch="Fill" Fill="#0000FF00" Data="F1 M 290.406,89.8908C 292.062,89.8908 293.405,91.2338 293.405,92.8904C 293.405,94.5471 292.062,95.89 290.406,95.89C 288.749,95.89 287.406,94.5471 287.406,92.8904C 287.406,91.2338 288.749,89.8908 290.406,89.8908 Z "/>
-        <Rectangle x:Name="clockMinuteHand" Width="4.66638" Height="38.9669" Canvas.Left="288.072" Canvas.Top="60.3944" Stretch="Fill" Fill="#FFFF0000">
+        <Rectangle x:Name="clockMinuteHand" Width="4.66638" Height="38.9669" Canvas.Left="288.072" Canvas.Top="60.3944" Stretch="Fill" Fill="{DynamicResource CharcoalBrush}">
             <Rectangle.RenderTransform>
                 <RotateTransform CenterX="2.3319" CenterY="32.4927" Angle="30" />
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Rectangle Width="26.1634" Height="4.66638" Canvas.Left="285.796" Canvas.Top="90.5571" Stretch="Fill" Fill="#FF0000FF"/>
+        <Rectangle x:Name="clockHourHand" Width="26.1634" Height="4.66638" Canvas.Left="285.796" Canvas.Top="90.5571" Stretch="Fill" Fill="{DynamicResource CharcoalBrush}">
+            <Rectangle.RenderTransform>
+                <RotateTransform CenterX="4.60635" CenterY="2.3319" Angle="30" />
+            </Rectangle.RenderTransform>
+        </Rectangle>
     </Canvas>
 </ResourceDictionary>
